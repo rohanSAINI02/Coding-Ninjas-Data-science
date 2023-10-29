@@ -1,0 +1,66 @@
+Given the 'start' and the 'end'' positions of the array 'input'. Your task is to sort the elements between 'start' and 'end' using quick sort.
+
+
+Note :
+Make changes in the input array itself.
+Input format :
+Line 1 : Integer N i.e. Array size
+Line 2 : Array elements (separated by space)
+Output format :
+Array elements in increasing order (separated by space)
+Sample Input 1 :
+6 
+2 6 8 5 4 3
+Sample Output 1 :
+2 3 4 5 6 8
+Sample Input 2 :
+5
+1 2 3 5 7
+Sample Output 2 :
+1 2 3 5 7 
+Constraints :
+1 <= N <= 10^3
+0 <= input[i] <= 10^9
+
+'''
+'''
+'''
+
+SOLUTION:
+
+def partition(a,si,ei):
+    pivot=a[si]
+    #find number of elements smaller than pivot
+    c=0
+    for i in range(si,ei+1):
+        if a[i]<pivot:
+            c=c+1
+    a[si+c],a[si]=a[si],a[si+c]
+    pivot_index=si+c
+    
+    i=si
+    j=ei
+    while i<j:
+        if a[i]<pivot:
+            i=i+1
+        elif a[j]>=pivot:
+            j=j-1
+        else:
+            a[i],a[j]=a[j],a[i]
+            i=i+1
+            j=j-1
+    return pivot_index
+
+def quick_sort(a,si,ei):
+    if si>=ei:
+        return
+    
+    pivot_index=partition(a,si,ei)
+    quick_sort(a,si,pivot_index-1)
+    quick_sort(a,pivot_index+1,ei)
+
+z = int(input())
+a = list(map(int,input().split()))
+quick_sort(a,0,len(a)-1)
+for i in a:
+    print(i,end=" ")
